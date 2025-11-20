@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "QR Code Master",
+  "version": "1.0",
+  "description": "QR画像をURLに変更するツール",
+  "permissions": ["sidePanel"],
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "action": {
+    "default_title": "QR変換"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  }
+}

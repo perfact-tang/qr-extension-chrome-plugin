@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QRコードマスター サイドパネル</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="styles.css">
+    
+    <script src="qrcode.min.js"></script>
+    <script src="jsQR.min.js"></script>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-title">
+            <i class="fa-solid fa-qrcode icon-logo"></i>
+            <h1>QRコードマスター</h1>
+        </div>
+        
+        <div class="tabs">
+            <button id="tab-scan" class="tab-btn active">
+                <i class="fa-solid fa-expand"></i> QR→URL
+            </button>
+            <button id="tab-generate" class="tab-btn">
+                <i class="fa-solid fa-pen-to-square"></i> URL→QR生成
+            </button>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div id="toast-container"></div>
+        <section id="view-scan" class="view-section active">
+            
+            <div class="info-box">
+                <i class="fa-solid fa-circle-info info-icon"></i>
+                アップロード、ドラッグ、または <span class="badge">Ctrl+V</span> で貼り付けに対応
+            </div>
+
+            <div id="drop-zone" class="drop-zone">
+                <div id="drop-placeholder" class="drop-placeholder">
+                    <div class="icon-circle">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                    </div>
+                    <p class="primary-text">クリックして画像をアップロード</p>
+                    <p class="secondary-text">またはファイルをここにドラッグ</p>
+                </div>
+
+                <img id="scan-preview" class="preview-img hidden" alt="プレビュー" />
+                
+                <button id="clear-scan" class="clear-btn hidden" title="クリア">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+                <input type="file" id="file-input" class="hidden" accept="image/png, image/jpeg, image/jpg, image/webp">
+            </div>
+
+            <button id="btn-scan" class="primary-btn" disabled>
+                <span class="btn-text">QRコードの内容を解析</span>
+                <div class="loader hidden"></div>
+            </button>
+
+            <div id="scan-result-container" class="result-container hidden">
+                <label class="label-text">解析結果</label>
+                <div class="input-wrapper">
+                    <textarea id="scan-result-text" readonly class="result-area"></textarea>
+                    <button id="copy-result" class="copy-btn" title="結果をコピー">
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+                </div>
+                <a id="open-link-btn" href="#" target="_blank" class="link-btn hidden">
+                    <i class="fa-solid fa-external-link-alt"></i> 新しいタブで開く
+                </a>
+            </div>
+
+        </section>
+
+        <section id="view-generate" class="view-section hidden">
+            <div class="form-group">
+                <label class="label-text">内容 / URL を入力</label>
+                <div class="input-wrapper">
+                    <textarea id="url-input" placeholder="https://example.com" class="input-area"></textarea>
+                    <button id="paste-url-btn" class="paste-btn">貼り付け</button>
+                </div>
+            </div>
+
+            <div class="config-grid">
+                <div>
+                    <label class="label-text">サイズ</label>
+                    <select id="qr-size" class="select-input">
+                        <option value="128">小 (128px)</option>
+                        <option value="200" selected>中 (200px)</option>
+                        <option value="300">大 (300px)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="label-text">誤り訂正レベル</label>
+                    <select id="qr-correct" class="select-input">
+                        <option value="L">低 (7%)</option>
+                        <option value="M" selected>中 (15%)</option>
+                        <option value="Q">高 (25%)</option>
+                        <option value="H">極高 (30%)</option>
+                    </select>
+                </div>
+            </div>
+
+            <button id="btn-generate" class="primary-btn">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> QRコードを生成
+            </button>
+
+            <div id="generate-result-container" class="generate-result hidden">
+                <div id="qrcode-output" class="qr-output"></div>
+                
+                <button id="btn-download" class="download-link">
+                    <i class="fa-solid fa-download"></i> PNG画像をダウンロード
+                </button>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        Chrome拡張機能 • QR Master v1.0
+    </footer>
+
+    <canvas id="process-canvas" class="hidden"></canvas>
+
+    <script src="sidepanel.js"></script>
+</body>
+</html>
